@@ -61,6 +61,28 @@ class HouseInformation extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+    # update post $id
+    public function updatePost($id) {
+      $data['id'] = $id;
+      $data['title'] = "House Information";
+      $data['post'] = $this->Houseinfo->getHouseInformation($id);
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('update_post', $data);
+      $this->load->view('templates/footer');
+    }
+
+    # submit a update of post $id
+    public function submitUpdatePost($id) {
+        $data['title'] = 'Update Post';
+        $data['updatedPost']=$this->Houseinfo->updatePost($id);
+        $data['msg'] = "Update a post successfully.";
+
+        $this->load->view('templates/header',$data);
+        $this->load->view('submit_update_post',$data);
+        $this->load->view('templates/footer');
+    }
+
     # delete post $id
     public function deletePost($id) {
       $data['id'] = $id;
@@ -95,6 +117,40 @@ class HouseInformation extends CI_Controller {
       $this->load->view('templates/footer');
     }
 
+    # get view times of post $id
+    public function getViewTimes($id) {
+      $data['id'] = $id;
+      $data['viewTimes'] = $this->Houseinfo->getViewTimes($id);
+      $data['title'] = "View Times of Post";
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('get_view_times', $data);
+      $this->load->view('templates/footer');
+    }
+    # rate post $id
+    public function ratePost($id) {
+      $data['id'] = $id;
+      $data['ratePost'] = $this->Houseinfo->getHouseInformation($id);
+      $data['title'] = "House Information";
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('rate_post', $data);
+      $this->load->view('templates/footer');
+    }
+
+    # submit rate post $id
+    # need to check validation
+    public function submitRatePost($id) {
+      $data['id'] = $id;
+      $data['ratePost'] = $this->Houseinfo->submitRatePost($_SESSION['id'],$id);
+      $data['title'] = "House Information";
+      $data['msg'] = 'Submit rating successfully.';
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('submit_rate_post', $data);
+      $this->load->view('templates/footer');
+    }
+
     # get average rating of a post
     public function getPostAverageRating($id) {
       $data['id'] = $id;
@@ -116,5 +172,31 @@ class HouseInformation extends CI_Controller {
       $this->load->view('get_tag_statistics', $data);
       $this->load->view('templates/footer');
     }
+
+    ## admin
+    # set post $id as pin
+    # need to check whether user is admin, need to check the row num of results
+    public function setPin($id) {
+      $data['id'] = $id;
+      $data['pinPost'] = $this->Houseinfo->setPin($id);
+      $data['title'] = "Pin Posts";
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('set_pin', $data);
+      $this->load->view('templates/footer');
+    }
+
+    # verify post $id
+    # need to check whether user is admin
+    public function verifyPost($id) {
+      $data['id'] = $id;
+      $data['verifiedPost'] = $this->Houseinfo->verifyPost($id);
+      $data['title'] = "Post verification";
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('verify_post', $data);
+      $this->load->view('templates/footer');
+    }
+
 
 }

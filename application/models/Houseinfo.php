@@ -82,4 +82,63 @@ class Houseinfo extends CI_Model {
     return $query->result_array();
     }
 
+    # get view times of post $id
+    public function getViewTimes($id) {
+    $query = $this->db->get_where('HouseInformation', array('id' => $id));
+    return $query->row_array();
+    }
+
+    # submit a new rating to post $relatedTo
+    public function submitRatePost($postedBy,$relatedTo) {
+      $data = array(
+        'relatedTo' => $relatedTo,
+        'postedBy' => $postedBy,
+        'rating' => $this->input->post('rating')
+      );
+      return $this->db->insert('HouseRating', $data);
+    }
+
+    # set post $id as pin
+    public function setPin($id) {
+      # set topPost to 1
+      # returns all the pin posts
+      $data = array('topPost' => 1);
+      $this->db->where('id',$id);
+      $query = $this->db->update('HouseInformation', $data);
+
+      $query = $this->db->get_where('HouseInformation', array('topPost' => 1));
+      return $query->result_array();
+    }
+
+    # verify post $id
+    public function verifyPost($id) {
+      # set verified to 1
+      $data = array('verified' => 1);
+      $this->db->where('id',$id);
+      $query = $this->db->update('HouseInformation', $data);
+
+      $query = $this->db->get_where('HouseInformation', array('id' => $id));
+      return $query->row_array();
+    }
+
+    # update post $id
+    public function updatePost($id) {
+      date_default_timezone_set('UTC');
+      $data = array(
+        'largeImage' => $this->input->post('largeImage'),
+        'typeName' => $this->input->post('typeName'),
+        'buildYear' => $this->input->post('buildYear'),
+        'location' => $this->input->post('location'),
+        'brNumber' => $this->input->post('brNumber'),
+        'price' => $this->input->post('price'),
+        'description' => $this->input->post('description'),
+        'updateTime' => date("Y/m/d")
+      );
+      $this->db->where('id',$id);
+      $query = $this->db->update('HouseInformation', $data);
+
+      $query = $this->db->get_where('HouseInformation', array('id' => $id));
+      return $query->row_array();
+    }
+
 }

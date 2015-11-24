@@ -41,4 +41,15 @@ class IndividualUser extends CI_Model {
         $sql = "update IndividualUser set password = '$new_pwd' where id = $id";
         return $this->db->query($sql);
     }
+
+    # submit a new rating to user $relatedTo
+    public function submitRateUser($postedBy,$relatedTo) {
+      $data = array(
+        'relatedTo' => $relatedTo,
+        'postedBy' => $postedBy,
+        'rating' => $this->input->post('rating')
+      );
+      return $this->db->insert('UserRating', $data);
+    }
+
 }
