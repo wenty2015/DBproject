@@ -61,28 +61,6 @@ class HouseInformation extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
-    # update post $id
-    public function updatePost($id) {
-      $data['id'] = $id;
-      $data['title'] = "House Information";
-      $data['post'] = $this->Houseinfo->getHouseInformation($id);
-
-      $this->load->view('templates/header', $data);
-      $this->load->view('update_post', $data);
-      $this->load->view('templates/footer');
-    }
-
-    # submit a update of post $id
-    public function submitUpdatePost($id) {
-        $data['title'] = 'Update Post';
-        $data['updatedPost']=$this->Houseinfo->updatePost($id);
-        $data['msg'] = "Update a post successfully.";
-
-        $this->load->view('templates/header',$data);
-        $this->load->view('submit_update_post',$data);
-        $this->load->view('templates/footer');
-    }
-
     # delete post $id
     public function deletePost($id) {
       $data['id'] = $id;
@@ -117,6 +95,28 @@ class HouseInformation extends CI_Controller {
       $this->load->view('templates/footer');
     }
 
+    # get average rating of a post
+    public function getPostAverageRating($id) {
+      $data['id'] = $id;
+      $data['postAverageRating'] = $this->Houseinfo->getPostAverageRating($id);
+      $data['title'] = "Average Rating";
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('get_post_average_rating', $data);
+      $this->load->view('templates/footer');
+    }
+
+    # get statistics of all tags
+    public function getTagStatistics($id) {
+      $data['id'] = $id;
+      $data['tagStatistics'] = $this->Houseinfo->getTagStatistics($id);
+      $data['title'] = "Statistics of Tag";
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('get_tag_statistics', $data);
+      $this->load->view('templates/footer');
+    }
+
     # get view times of post $id
     public function getViewTimes($id) {
       $data['id'] = $id;
@@ -127,6 +127,7 @@ class HouseInformation extends CI_Controller {
       $this->load->view('get_view_times', $data);
       $this->load->view('templates/footer');
     }
+
     # rate post $id
     public function ratePost($id) {
       $data['id'] = $id;
@@ -151,29 +152,6 @@ class HouseInformation extends CI_Controller {
       $this->load->view('templates/footer');
     }
 
-    # get average rating of a post
-    public function getPostAverageRating($id) {
-      $data['id'] = $id;
-      $data['postAverageRating'] = $this->Houseinfo->getPostAverageRating($id);
-      $data['title'] = "Average Rating";
-
-      $this->load->view('templates/header', $data);
-      $this->load->view('get_post_average_rating', $data);
-      $this->load->view('templates/footer');
-    }
-
-    # get statistics of all tags
-    public function getTagStatistics($id) {
-      $data['id'] = $id;
-      $data['tagStatistics'] = $this->Houseinfo->getTagStatistics($id);
-      $data['title'] = "Statistics of Tag";
-
-      $this->load->view('templates/header', $data);
-      $this->load->view('get_tag_statistics', $data);
-      $this->load->view('templates/footer');
-    }
-
-    ## admin
     # set post $id as pin
     # need to check whether user is admin, need to check the row num of results
     public function setPin($id) {
@@ -198,5 +176,26 @@ class HouseInformation extends CI_Controller {
       $this->load->view('templates/footer');
     }
 
+    # update post $id
+    public function updatePost($id) {
+      $data['id'] = $id;
+      $data['title'] = "House Information";
+      $data['post'] = $this->Houseinfo->getHouseInformation($id);
+
+      $this->load->view('templates/header', $data);
+      $this->load->view('update_post', $data);
+      $this->load->view('templates/footer');
+    }
+
+    # submit a update of post $id
+    public function submitUpdatePost($id) {
+        $data['title'] = 'Update Post';
+        $data['updatedPost']=$this->Houseinfo->updatePost($id);
+        $data['msg'] = "Update a post successfully.";
+
+        $this->load->view('templates/header',$data);
+        $this->load->view('submit_update_post',$data);
+        $this->load->view('templates/footer');
+    }
 
 }
